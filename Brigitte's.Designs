@@ -1,0 +1,359 @@
+import React, { useState, useEffect } from 'react';
+import { Crown, Camera, Pencil } from 'lucide-react';
+
+const AnimatedHero = () => {
+  const [currentText, setCurrentText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const fullText = 'Designer Lifestyle';
+
+  useEffect(() => {
+    if (currentIndex < fullText.length) {
+      const timeout = setTimeout(() => {
+        setCurrentText(prev => prev + fullText[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, 150);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, fullText]);
+
+  return (
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
+      {/* Floating Icons */}
+      <div className="absolute inset-0 pointer-events-none">
+        <Crown className="absolute top-20 left-10 text-yellow-400 animate-bounce" size={32} style={{ animationDelay: '0s' }} />
+        <Camera className="absolute top-32 right-20 text-blue-500 animate-bounce" size={28} style={{ animationDelay: '1s' }} />
+        <Pencil className="absolute bottom-32 left-20 text-green-500 animate-bounce" size={30} style={{ animationDelay: '2s' }} />
+        <Crown className="absolute bottom-20 right-10 text-purple-400 animate-bounce" size={24} style={{ animationDelay: '1.5s' }} />
+      </div>
+
+      <div className="text-center z-10 max-w-4xl mx-auto px-4">
+        <div className="mb-8 relative">
+          <Crown className="mx-auto text-yellow-500 mb-6 animate-pulse" size={64} />
+        </div>
+        
+        <h1 className="text-6xl md:text-8xl font-bold text-gray-800 mb-6 relative">
+          {currentText}
+          <span className="animate-pulse">|</span>
+        </h1>
+        
+        <p className="text-xl md:text-2xl text-gray-600 mb-8 animate-fade-in" style={{ animationDelay: '3s' }}>
+          Where Creativity Meets Innovation
+        </p>
+        
+        <div className="flex flex-wrap justify-center gap-4 animate-fade-in" style={{ animationDelay: '4s' }}>
+          <div className="flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <Pencil className="text-gray-700" size={20} />
+            <span className="text-gray-700 font-medium">Design</span>
+          </div>
+          <div className="flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <Camera className="text-gray-700" size={20} />
+            <span className="text-gray-700 font-medium">Photography</span>
+          </div>
+          <div className="flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <Crown className="text-gray-700" size={20} />
+            <span className="text-gray-700 font-medium">Premium</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default AnimatedHero;
+ServicesSection.tsx
+
+
+import React from 'react';
+import { Crown, Camera, Pencil } from 'lucide-react';
+
+const ServicesSection = () => {
+  const services = [
+    {
+      icon: <Pencil className="text-blue-500" size={48} />,
+      title: "Graphic Design",
+      description: "Creating stunning visual identities that capture your brand's essence and speak to your audience.",
+      features: ["Logo Design", "Brand Identity", "Print Design", "Digital Graphics"]
+    },
+    {
+      icon: <Camera className="text-green-500" size={48} />,
+      title: "Photography",
+      description: "Professional photography services that tell your story through compelling visual narratives.",
+      features: ["Portrait Photography", "Product Photography", "Event Coverage", "Commercial Shoots"]
+    },
+    {
+      icon: <Crown className="text-yellow-500" size={48} />,
+      title: "Premium Consulting",
+      description: "Exclusive design consulting services to elevate your brand to the next level of sophistication.",
+      features: ["Brand Strategy", "Creative Direction", "Design Systems", "Premium Support"]
+    }
+  ];
+
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+            Our Creative Services
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Transforming ideas into visual masterpieces that inspire and engage
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <div
+              key={index}
+              className="group bg-gray-50 rounded-2xl p-8 hover:bg-white hover:shadow-xl transition-all duration-500 hover:-translate-y-2"
+            >
+              <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                {service.icon}
+              </div>
+              
+              <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-blue-600 transition-colors">
+                {service.title}
+              </h3>
+              
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                {service.description}
+              </p>
+              
+              <ul className="space-y-2">
+                {service.features.map((feature, featureIndex) => (
+                  <li key={featureIndex} className="flex items-center text-gray-700">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 group-hover:animate-pulse"></div>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ServicesSection;
+PortfolioGallery.tsx
+
+
+import React, { useState } from 'react';
+
+const PortfolioGallery = () => {
+  const [activeCategory, setActiveCategory] = useState('all');
+
+  const portfolioItems = [
+    { id: 1, category: 'design', title: 'Brand Identity Project', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop' },
+    { id: 2, category: 'photography', title: 'Product Photography', image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop' },
+    { id: 3, category: 'design', title: 'Logo Design Collection', image: 'https://images.unsplash.com/photo-1626785774625-0b1c2c4eab67?w=400&h=300&fit=crop' },
+    { id: 4, category: 'photography', title: 'Portrait Session', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop' },
+    { id: 5, category: 'design', title: 'Web Design Project', image: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=400&h=300&fit=crop' },
+    { id: 6, category: 'photography', title: 'Commercial Shoot', image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop' }
+  ];
+
+  const categories = [
+    { id: 'all', label: 'All Work' },
+    { id: 'design', label: 'Design' },
+    { id: 'photography', label: 'Photography' }
+  ];
+
+  const filteredItems = activeCategory === 'all' 
+    ? portfolioItems 
+    : portfolioItems.filter(item => item.category === activeCategory);
+
+  return (
+    <section className="py-20 bg-gray-50">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+            Our Portfolio
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+            A showcase of our finest creative work and artistic achievements
+          </p>
+
+          {/* Filter Buttons */}
+          <div className="flex flex-wrap justify-center gap-4">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setActiveCategory(category.id)}
+                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                  activeCategory === category.id
+                    ? 'bg-blue-500 text-white shadow-lg scale-105'
+                    : 'bg-white text-gray-700 hover:bg-gray-100 hover:scale-105'
+                }`}
+              >
+                {category.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Gallery Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredItems.map((item) => (
+            <div
+              key={item.id}
+              className="group relative overflow-hidden rounded-2xl bg-white shadow-lg cursor-pointer transform hover:scale-105 transition-all duration-500"
+            >
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                <span className="text-sm bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                  {item.category}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default PortfolioGallery;
+ContactSection.tsx
+
+
+import React, { useState } from 'react';
+import { Crown } from 'lucide-react';
+import { toast } from 'sonner';
+
+const ContactSection = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    project: '',
+    message: ''
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast.success("Thank you! We'll get back to you soon.");
+    setFormData({ name: '', email: '', project: '', message: '' });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  return (
+    <section className="py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="text-center mb-16">
+          <Crown className="mx-auto text-yellow-400 mb-6 animate-pulse" size={48} />
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Let's Create Something Amazing
+          </h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            Ready to bring your vision to life? Get in touch and let's start your next creative project.
+          </p>
+        </div>
+
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="group">
+                <label className="block text-sm font-medium mb-2 text-gray-300">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-400 group-hover:bg-white/15"
+                  placeholder="Your full name"
+                />
+              </div>
+              
+              <div className="group">
+                <label className="block text-sm font-medium mb-2 text-gray-300">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-400 group-hover:bg-white/15"
+                  placeholder="your@email.com"
+                />
+              </div>
+            </div>
+
+            <div className="group">
+              <label className="block text-sm font-medium mb-2 text-gray-300">Project Type</label>
+              <select
+                name="project"
+                value={formData.project}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-white group-hover:bg-white/15"
+              >
+                <option value="" className="text-gray-800">Select a project type</option>
+                <option value="branding" className="text-gray-800">Brand Identity & Logo Design</option>
+                <option value="photography" className="text-gray-800">Photography Services</option>
+                <option value="consulting" className="text-gray-800">Premium Design Consulting</option>
+                <option value="other" className="text-gray-800">Other Creative Services</option>
+              </select>
+            </div>
+
+            <div className="group">
+              <label className="block text-sm font-medium mb-2 text-gray-300">Message</label>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                required
+                rows={4}
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-400 resize-none group-hover:bg-white/15"
+                placeholder="Tell us about your project and vision..."
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 px-8 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Start Your Project
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ContactSection;
+Index.tsx (Main Page)
+
+
+import React from 'react';
+import AnimatedHero from '@/components/AnimatedHero';
+import ServicesSection from '@/components/ServicesSection';
+import PortfolioGallery from '@/components/PortfolioGallery';
+import ContactSection from '@/components/ContactSection';
+
+const Index = () => {
+  return (
+    <div className="min-h-screen">
+      <AnimatedHero />
+      <ServicesSection />
+      <PortfolioGallery />
+      <ContactSection />
+    </div>
+  );
+};
+
+export default Index;
